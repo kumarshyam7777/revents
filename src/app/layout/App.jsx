@@ -1,10 +1,11 @@
-const App = (props) => {
+import React from "react";
+import EventDashboard from "../../features/events/eventDashboard/EventDashboard";
+//import { Button } from "semantic-ui-react";
+export default function App() {
   return (
-    <div className="App">
+    <div>
       <h1>Re-vents</h1>
-      <h3>The styles are Global in index.js file</h3>
+      <EventDashboard/>
     </div>
   );
-};
-
-export default App;
+}
