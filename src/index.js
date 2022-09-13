@@ -1,21 +1,21 @@
 import React from "react";
-import ReactDOM from "react-dom"
-import "semantic-ui-css/semantic.min.css"
+import ReactDOM from "react-dom";
+import "semantic-ui-css/semantic.min.css";
 import "./app/layout/styles.css";
 import App from "./app/layout/App";
 
+const rootElement = document.getElementById("root");
 
- ReactDOM.render(<App/>,document.getElementById("root"));
+function render() {
+  ReactDOM.render(<App />, rootElement);
+}
 
-// function render() {
-//   root.render(<App />);
-// }
+if (module.hot) {
+  module.hot.accept("./app/layout/App", () => {
+    setTimeout(render);
+  });
+}
 
-// if (module.hot) {
-//   module.hot.accept("./app/layout/App", () => {
-//     setTimeout(render);
-//   });
-// }
+render();
 
-// render();
-
+// https://mdbootstrap.com/docs/react/extended/login-form/
