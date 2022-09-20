@@ -2,6 +2,7 @@ import cuid from "cuid";
 import React from "react";
 import { useState } from "react";
 import { Button, Form, Header, Segment } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 const EventForm = ({
   setFormOpen,
@@ -22,14 +23,15 @@ const EventForm = ({
   const [values, setValues] = useState(initialValues);
 
   function handleFormSubmit() {
-    //console.log(values);
-    createEvent({
-      ...values,
-      id: cuid(),
-      hostedBy: "Bob",
-      attendees: [],
-      hostPhotoURL: "assets/user.png",
-    });
+    selectedEvent
+      ? updateEvent({ ...selectedEvent, ...values })
+      : createEvent({
+          ...values,
+          id: cuid(),
+          hostedBy: "Bob",
+          attendees: [],
+          hostPhotoURL: "assets/user.png",
+        });
     setFormOpen(false);
   }
 
@@ -100,7 +102,9 @@ const EventForm = ({
         </Form.Field>
         <Button type='submit' floated='right' positive content='Submit' />
         <Button
-          onClick={() => setFormOpen(false)}
+          // onClick={() => setFormOpen(false)}
+          as={Link}
+          to='/events'
           type='submit'
           floated='right'
           positive
