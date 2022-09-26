@@ -1,6 +1,5 @@
-import React from 'react'
-
-import { Route } from "react-router-dom";
+import React from "react";
+import { Route, useLocation } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 import EventDashboard from "../../features/events/eventDashboard/EventDashboard";
 //import { Button } from "semantic-ui-react";
@@ -8,8 +7,10 @@ import NavBar from "./../../features/nav/NavBar";
 import HomePage from "./../../home/HomePage";
 import EventDetailedPage from "./../../features/events/eventDetail/EventDetailedPage";
 import EventForm from "../../features/events/eventForm/EventForm";
-export default function App() {
+import Sandbox from "./../../features/sandbox/SandBox";
 
+export default function App() {
+  const { key } = useLocation();
 
   // function handleSelectedEvent(event) {
   //   setSelectedEvent(event);
@@ -27,13 +28,15 @@ export default function App() {
         path={"/(.+)"}
         render={() => (
           <>
-            <NavBar  />
+            <NavBar />
             <Container className='main'>
               <Route exact path={"/events"} component={EventDashboard} />
+              <Route exact path={"/sandbox"} component={Sandbox} />
               <Route path={"/events/:id"} component={EventDetailedPage} />
               <Route
                 path={["/createEvent", "/manage/:id"]}
                 component={EventForm}
+                key={key}
               />
             </Container>
           </>

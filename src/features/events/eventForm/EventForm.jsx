@@ -3,14 +3,21 @@ import React from "react";
 import { useState } from "react";
 import { Button, Form, Header, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { createEvent, updateEvent } from "../eventActions";
+
 
 const EventForm = ({
-  setFormOpen,
-  setEvents,
-  createEvent,
-  selectedEvent,
-  updateEvent,
+  match,
+  history
 }) => {
+  const selectedEvent = useSelector((state) =>
+    state.event.events.find((e) => e.id === match.params.id)
+  );
+
+  const dispatch = useDispatch();
+
   const initialValues = selectedEvent ?? {
     title: "",
     category: "",
@@ -24,15 +31,15 @@ const EventForm = ({
 
   function handleFormSubmit() {
     selectedEvent
-      ? updateEvent({ ...selectedEvent, ...values })
-      : createEvent({
+      ? dispatch(updateEvent({ ...selectedEvent, ...values }))
+      : dispatch(createEvent({
           ...values,
           id: cuid(),
           hostedBy: "Bob",
           attendees: [],
           hostPhotoURL: "assets/user.png",
-        });
-    setFormOpen(false);
+        }))
+        history.push("/events")
   }
 
   function handleInputChange(e) {
